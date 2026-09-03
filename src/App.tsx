@@ -49,6 +49,11 @@ export default function App() {
     return registerScrollTrigger(setActiveSection)
   }, [])
 
+  useEffect(() => {
+    const loadingTimeout = window.setTimeout(() => setIsLoading(false), 12000)
+    return () => window.clearTimeout(loadingTimeout)
+  }, [])
+
   return (
     <>
       {isLoading && <Loader />}
@@ -71,15 +76,17 @@ export default function App() {
       
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Canvas 
-          dpr={[1, 2]} 
+          dpr={[1, 1.5]} 
           camera={{ fov: 35, position: [-3.51, 3.03, 5.7] }}
           onCreated={() => setIsLoading(false)}
         >
           <Suspense fallback={null}>
             <Environment preset="studio" />
-            <Roadster config={config} />
-            <CameraRig />
           </Suspense>
+          <Suspense fallback={null}>
+            <Roadster config={config} onLoaded={() => setIsLoading(false)} />
+          </Suspense>
+          <CameraRig />
         </Canvas>
       </div>
 

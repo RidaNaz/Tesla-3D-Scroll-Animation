@@ -160,6 +160,7 @@ export type RoadsterConfig = {
 
 type RoadsterProps = React.JSX.IntrinsicElements['group'] & {
   config?: RoadsterConfig
+  onLoaded?: () => void
 }
 
 const DEFAULT_CONFIG: RoadsterConfig = {
@@ -169,8 +170,12 @@ const DEFAULT_CONFIG: RoadsterConfig = {
   interior: 'black',
 }
 
-export function Roadster({ config = DEFAULT_CONFIG, ...props }: RoadsterProps) {
+export function Roadster({ config = DEFAULT_CONFIG, onLoaded, ...props }: RoadsterProps) {
   const { nodes, materials } = useGLTF('/scene.glb') as unknown as GLTFResult
+
+  useEffect(() => {
+    onLoaded?.()
+  }, [materials, onLoaded])
 
   useEffect(() => {
     const carPaint = materials.car_main_paint
