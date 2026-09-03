@@ -8,7 +8,7 @@ Title: Tesla Roadster 2020 | www.vecarz.com
 */
 
 import * as THREE from 'three'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
 import type { GLTF } from 'three-stdlib'
 
@@ -153,6 +153,14 @@ type GLTFResult = GLTF & {
 
 export function Roadster(props: React.JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/scene.glb') as unknown as GLTFResult
+  
+  useEffect(() => {
+    const carPaint = (materials as any).car_main_paint as THREE.MeshPhysicalMaterial
+    if (carPaint) {
+      carPaint.color.set('#E31C23') // Bright Tesla red
+    }
+  }, [materials])
+  
   return (
     <group {...props} dispose={null}>
       <group rotation={[-1.574, 0, 0]}>
