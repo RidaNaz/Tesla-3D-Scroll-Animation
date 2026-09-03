@@ -45,6 +45,22 @@ export default function App() {
   return (
     <>
       {isLoading && <Loader />}
+
+      <header className="fixed inset-x-0 top-0 z-20 px-4 py-4 sm:px-8 sm:py-6 md:px-12">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+          <a href="#exterior" className="flex min-w-0 shrink-0 items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-black sm:gap-3 sm:text-base">
+            <img src="/favicon.svg" alt="Rida Naz logo" className="size-7 object-contain sm:size-8" />
+            <span>Roadster</span>
+          </a>
+          <nav aria-label="Section navigation" className="flex min-w-0 items-center gap-3 overflow-x-auto text-[10px] font-semibold uppercase tracking-[0.12em] text-black/65 sm:gap-6 sm:text-xs">
+            {SECTIONS.map((section) => (
+              <a key={section.id} href={`#${section.id}`} className="shrink-0 py-2 transition-colors hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black">
+                {section.title}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </header>
       
       <div className="fixed inset-0 -z-10">
         <Canvas 
@@ -62,7 +78,7 @@ export default function App() {
 
       <div id="scroll-root" className="relative">
         {SECTIONS.map((section, i) => (
-          <section key={section.id} className="h-screen flex items-center justify-start p-6 sm:p-8 md:p-12">
+          <section id={section.id} key={section.id} className="flex h-screen items-center justify-start p-6 pt-24 sm:p-8 sm:pt-28 md:p-12">
             <AnimatePresence>
               {activeSection === i && (
                 <motion.div
@@ -105,6 +121,31 @@ export default function App() {
           </section>
         ))}
       </div>
+
+      <footer className="relative z-10 mt-12 border-t border-black/10 bg-white/90 px-6 py-6 backdrop-blur-sm sm:mt-16 sm:px-8 md:mt-20 md:px-12">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 text-xs leading-relaxed text-black/60 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+          <p>
+            3D model “Tesla Roadster 2020” by metarex.4d, via Sketchfab, CC-BY-4.0. Built by{' '}
+            <a
+              href="https://ridanaz.com"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-black underline decoration-black/30 underline-offset-4 transition-colors hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
+            >
+              Rida Naz
+            </a>
+            .
+          </p>
+          <a
+            href="https://sketchfab.com/3d-models/tesla-roadster-2020-wwwvecarzcom-fac3d813620f4c4a95da1933c2592069"
+            target="_blank"
+            rel="noreferrer"
+            className="shrink-0 font-semibold text-black underline decoration-black/30 underline-offset-4 transition-colors hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
+          >
+            View source on Sketchfab
+          </a>
+        </div>
+      </footer>
     </>
   )
 }
