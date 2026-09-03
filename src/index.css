@@ -2,10 +2,10 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f1f0ec;
-  --surface: #f8f7f3;
-  --ink: #111214;
-  --graphite: #5e6265;
+  --paper: #080909;
+  --surface: #141617;
+  --ink: #f5f3ee;
+  --graphite: #a6aaab;
   --accent: #e31c23;
   font-family: 'DM Sans', sans-serif;
   color: var(--ink);
@@ -18,10 +18,18 @@ html, body, #root {
   height: 100%;
 }
 
+#root {
+  min-height: 100%;
+  background: transparent;
+}
+
 body {
   margin: 0;
   min-width: 320px;
-  background: var(--paper);
+  background:
+    radial-gradient(ellipse 78% 68% at 50% 50%, rgba(227, 28, 35, 0.42), transparent 72%),
+    #050505;
+  background-attachment: fixed;
 }
 
 h1, h2, h3, button, legend, nav {
@@ -30,7 +38,7 @@ h1, h2, h3, button, legend, nav {
 
 select {
   font-family: 'DM Sans', sans-serif;
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 select option:checked {
