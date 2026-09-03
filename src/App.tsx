@@ -92,7 +92,7 @@ export default function App() {
 
       <div id="scroll-root" className="relative z-10">
         {SECTIONS.map((section, i) => (
-          <section id={section.id} key={section.id} className="flex h-screen items-center justify-start p-6 pt-24 sm:p-8 sm:pt-28 md:p-12">
+          <section id={section.id} key={section.id} className="flex h-screen items-start justify-start p-6 pt-32 sm:p-8 sm:pt-36 md:items-center md:p-12 md:pt-24">
             <AnimatePresence>
               {activeSection === i && (
                 <motion.div

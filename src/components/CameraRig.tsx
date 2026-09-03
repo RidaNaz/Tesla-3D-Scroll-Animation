@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { scrollState } from '../lib/scrollState'
@@ -17,6 +18,20 @@ const tmpLook = new THREE.Vector3()
 
 export function CameraRig() {
   const { camera } = useThree()
+
+  useEffect(() => {
+    const updateCameraFov = () => {
+      const fov = window.innerWidth < 768 ? 45 : 35
+      if (camera instanceof THREE.PerspectiveCamera && camera.fov !== fov) {
+        camera.fov = fov
+        camera.updateProjectionMatrix()
+      }
+    }
+
+    updateCameraFov()
+    window.addEventListener('resize', updateCameraFov)
+    return () => window.removeEventListener('resize', updateCameraFov)
+  }, [camera])
 
   useFrame(() => {
     const progress = scrollState.progress
