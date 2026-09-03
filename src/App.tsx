@@ -4,6 +4,7 @@ import { Environment } from '@react-three/drei'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Roadster } from './components/Roadster'
 import { CameraRig } from './components/CameraRig'
+import { Loader } from './components/Loader'
 import { useLenis } from './hooks/useLenis'
 import { registerScrollTrigger } from './lib/scrollState'
 
@@ -15,6 +16,7 @@ const SECTIONS = [
 
 export default function App() {
   const [activeSection, setActiveSection] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
   useLenis()
 
   useEffect(() => {
@@ -23,8 +25,14 @@ export default function App() {
 
   return (
     <>
+      {isLoading && <Loader />}
+      
       <div className="fixed inset-0 -z-10">
-        <Canvas dpr={[1, 2]} camera={{ fov: 35, position: [-3.51, 3.03, 5.7] }}>
+        <Canvas 
+          dpr={[1, 2]} 
+          camera={{ fov: 35, position: [-3.51, 3.03, 5.7] }}
+          onCreated={() => setIsLoading(false)}
+        >
           <Suspense fallback={null}>
             <Environment preset="studio" />
             <Roadster />
