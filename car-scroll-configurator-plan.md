@@ -34,10 +34,20 @@ Component: `src/components/Roadster.tsx` (exported as `Roadster`), asset at `pub
 
 ---
 
+## Camera Shots — Confirmed
+
+```
+EXTERIOR HERO:        position [-3.51, 3.03, 5.70]
+PERFORMANCE DETAIL:   position [2.14, 1.41, 3.30]   (wheel/badge/headlight/carbon lip)
+INTERIOR CABIN:       position [2.03, 1.66, -0.22]  (side angle through glass, steering wheel + seats visible)
+```
+Environment preset confirmed: `"studio"`.
+Note: only camera *position* was captured (no orbit target) — look-at points will be derived toward the car's center/relevant feature in Phase 2 and adjusted if framing looks off once animated.
+
 ## Progress
 
 - [x] Phase 0 — Model sourced, validated, compressed, `gltfjsx`'d, component renamed/relocated
-- [ ] Phase 1 — Scene & camera skeleton (in progress: Canvas/Suspense/Environment scaffolded, `npm run dev` confirmed running — visual confirmation of render pending)
+- [x] Phase 1 — Scene & camera skeleton (Environment preset chosen, 3 camera shots confirmed via on-screen debug readout)
 - [ ] Phase 2 — Scroll engine
 - [ ] Phase 3 — Section content
 - [ ] Phase 4 — Configurator
