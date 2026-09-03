@@ -55,13 +55,13 @@ export default function App() {
 
       <header className="fixed inset-x-0 top-0 z-20 px-4 py-4 sm:px-8 sm:py-6 md:px-12">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-          <a href="#exterior" className="flex min-w-0 shrink-0 items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-black sm:gap-3 sm:text-base">
+          <a href="#exterior" className="flex min-w-0 shrink-0 items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-[#111214] sm:gap-3 sm:text-base">
             <img src="/favicon.svg" alt="Rida Naz logo" className="size-7 object-contain sm:size-8" />
             <span>Roadster</span>
           </a>
-          <nav aria-label="Section navigation" className="flex min-w-0 items-center gap-3 overflow-x-auto text-[10px] font-semibold uppercase tracking-[0.12em] text-black/65 sm:gap-6 sm:text-xs">
+          <nav aria-label="Section navigation" className="flex min-w-0 items-center gap-3 overflow-x-auto text-[10px] font-semibold uppercase tracking-[0.12em] text-[#111214]/65 sm:gap-6 sm:text-xs">
             {SECTIONS.map((section) => (
-              <a key={section.id} href={`#${section.id}`} className="shrink-0 py-2 transition-colors hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black">
+              <a key={section.id} href={`#${section.id}`} className="shrink-0 py-2 transition-colors hover:text-[#e31c23] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111214]">
                 {section.title}
               </a>
             ))}
@@ -69,7 +69,7 @@ export default function App() {
         </div>
       </header>
       
-      <div className="fixed inset-0 -z-10">
+      <div className="fixed inset-0 z-0 pointer-events-none">
         <Canvas 
           dpr={[1, 2]} 
           camera={{ fov: 35, position: [-3.51, 3.03, 5.7] }}
@@ -83,7 +83,7 @@ export default function App() {
         </Canvas>
       </div>
 
-      <div id="scroll-root" className="relative">
+      <div id="scroll-root" className="relative z-10">
         {SECTIONS.map((section, i) => (
           <section id={section.id} key={section.id} className="flex h-screen items-center justify-start p-6 pt-24 sm:p-8 sm:pt-28 md:p-12">
             <AnimatePresence>
@@ -95,10 +95,10 @@ export default function App() {
                   transition={{ duration: 0.4 }}
                 >
                   <div>
-                    <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black drop-shadow-lg">
+                    <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#111214] drop-shadow-lg">
                     {section.title}
                     </h2>
-                    <p className="text-base sm:text-lg md:text-xl text-black/80 mt-4 max-w-xs sm:max-w-sm md:max-w-md leading-relaxed">
+                    <p className="text-base sm:text-lg md:text-xl text-[#111214]/80 mt-4 max-w-xs sm:max-w-sm md:max-w-md leading-relaxed">
                       {section.copy}
                     </p>
                     
@@ -111,10 +111,10 @@ export default function App() {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: idx * 0.1 + 0.2, duration: 0.3 }}
                           >
-                            <div className="text-sm font-semibold text-black/60 uppercase tracking-wide">
+                            <div className="font-mono text-sm font-semibold uppercase tracking-wide text-[#5e6265]">
                               {spec.label}
                             </div>
-                            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mt-1">
+                            <div className="mt-1 font-mono text-2xl font-bold text-[#111214] sm:text-3xl md:text-4xl">
                               {spec.value}{spec.unit || ''}
                             </div>
                           </motion.div>
@@ -131,15 +131,15 @@ export default function App() {
 
       <Configurator config={config} onChange={setConfig} />
 
-      <footer className="relative z-10 mt-12 border-t border-black/10 bg-white/90 px-6 py-6 backdrop-blur-sm sm:mt-16 sm:px-8 md:mt-20 md:px-12">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 text-xs leading-relaxed text-black/60 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+      <footer className="relative z-10 mt-12 border-t border-[#111214]/10 bg-[#f8f7f3]/95 px-6 py-6 backdrop-blur-sm sm:mt-16 sm:px-8 md:mt-20 md:px-12">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 text-xs leading-relaxed text-[#5e6265] sm:flex-row sm:items-center sm:justify-between sm:gap-6">
           <p>
             3D model “Tesla Roadster 2020” by metarex.4d, via Sketchfab, CC-BY-4.0. Built by{' '}
             <a
               href="https://ridanaz.com"
               target="_blank"
               rel="noreferrer"
-              className="font-semibold text-black underline decoration-black/30 underline-offset-4 transition-colors hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
+              className="font-semibold text-[#111214] underline decoration-[#111214]/30 underline-offset-4 transition-colors hover:text-[#e31c23] hover:decoration-[#e31c23] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111214]"
             >
               Rida Naz
             </a>
@@ -149,7 +149,7 @@ export default function App() {
             href="https://sketchfab.com/3d-models/tesla-roadster-2020-wwwvecarzcom-fac3d813620f4c4a95da1933c2592069"
             target="_blank"
             rel="noreferrer"
-            className="shrink-0 font-semibold text-black underline decoration-black/30 underline-offset-4 transition-colors hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
+            className="shrink-0 font-semibold text-[#111214] underline decoration-[#111214]/30 underline-offset-4 transition-colors hover:text-[#e31c23] hover:decoration-[#e31c23] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111214]"
           >
             View source on Sketchfab
           </a>

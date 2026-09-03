@@ -1,5 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
 @import "tailwindcss";
+
+:root {
+  --paper: #f1f0ec;
+  --surface: #f8f7f3;
+  --ink: #111214;
+  --graphite: #5e6265;
+  --accent: #e31c23;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
 
 html, body, #root {
   height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--paper);
+}
+
+h1, h2, h3, button, legend, nav {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+select {
+  font-family: 'DM Sans', sans-serif;
+  color-scheme: light;
+}
+
+select option:checked {
+  color: white;
+  background: var(--accent);
 }
