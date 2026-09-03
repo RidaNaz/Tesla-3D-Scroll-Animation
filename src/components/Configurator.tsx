@@ -48,7 +48,7 @@ function ConfiguratorSelect({ label, value, options, onChange }: ConfiguratorSel
                 <span aria-hidden="true" className={`ml-2 text-[#e31c23] transition-transform ${isOpen ? 'rotate-180' : ''}`}>⌄</span>
             </button>
             {isOpen && (
-                <div role="listbox" aria-label={label} className="absolute left-0 top-[calc(100%+0.35rem)] z-30 w-full overflow-hidden rounded-lg border border-black/10 bg-[#f8f7f3] shadow-xl shadow-black/10">
+                <div role="listbox" aria-label={label} className="absolute bottom-[calc(100%+0.35rem)] left-0 z-30 w-full overflow-hidden rounded-lg border border-black/10 bg-[#f8f7f3] shadow-xl shadow-black/10 md:bottom-auto md:top-[calc(100%+0.35rem)]">
                     {options.map((option) => (
                         <button key={option.value} type="button" role="option" aria-selected={option.value === value} onClick={() => { onChange(option.value); setIsOpen(false) }} className={`block w-full rounded-md px-2 py-2 text-left text-xs font-semibold transition-colors hover:bg-black/5 hover:text-[#111214] focus-visible:bg-black/5 focus-visible:text-[#111214] focus-visible:outline-none ${option.value === value ? 'bg-[#e31c23] text-white' : 'text-[#111214]'}`}>              {option.label}
                         </button>
@@ -60,18 +60,30 @@ function ConfiguratorSelect({ label, value, options, onChange }: ConfiguratorSel
 }
 
 export function Configurator({ config, onChange }: ConfiguratorProps) {
+    const [isOpen, setIsOpen] = useState(false)
+
     const updateConfig = <K extends keyof RoadsterConfig>(key: K, value: RoadsterConfig[K]) => {
         onChange({ ...config, [key]: value })
     }
 
     return (
-        <aside className="fixed bottom-5 right-5 z-20 w-[min(19rem,calc(100vw-2.5rem))] rounded-2xl border border-black/10 bg-[#f5f3ee]/95 p-5 text-black shadow-2xl shadow-black/10 backdrop-blur-md sm:bottom-8 sm:right-8 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2" aria-label="Roadster configurator">
+        <>
+            <button type="button" aria-label="Open configurator" title="Open configurator" aria-expanded={isOpen} aria-controls="roadster-configurator" onClick={() => setIsOpen(true)} className={`${isOpen ? 'hidden' : 'flex'} fixed bottom-5 right-5 z-20 size-11 items-center justify-center rounded-full border border-black/10 bg-[#f5f3ee]/95 text-2xl font-medium leading-none text-[#111214] shadow-xl shadow-black/10 backdrop-blur-md transition-colors hover:bg-[#111214] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e31c23] md:hidden`}>
+                <span aria-hidden="true">⚙</span>
+            </button>
+
+            <aside id="roadster-configurator" className={`${isOpen ? 'block' : 'hidden'} fixed bottom-5 right-5 z-20 max-h-[calc(100vh-5rem)] w-[min(19rem,calc(100vw-2.5rem))] overflow-y-auto rounded-2xl border border-black/10 bg-[#f5f3ee]/95 p-5 text-black shadow-2xl shadow-black/10 backdrop-blur-md md:block md:max-h-none md:overflow-visible md:bottom-auto md:right-8 md:top-1/2 md:-translate-y-1/2`} aria-label="Roadster configurator">
             <div className="flex items-start justify-between gap-4 border-b border-black/10 pb-4">
                 <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/45">Your Roadster</p>
                     <h2 className="mt-1 text-lg font-bold tracking-tight">Configure the finish</h2>
                 </div>
-                <span className="mt-1 size-3 shrink-0 rounded-full" style={{ backgroundColor: config.paint }} aria-label={`Selected paint ${config.paint}`} />
+                <div className="flex items-center gap-3">
+                    <span className="mt-1 size-3 shrink-0 rounded-full" style={{ backgroundColor: config.paint }} aria-label={`Selected paint ${config.paint}`} />
+                    <button type="button" aria-label="Close configurator" title="Close configurator" onClick={() => setIsOpen(false)} className="p-0 text-3xl leading-none text-[#111214] transition-colors hover:text-[#e31c23] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e31c23] md:hidden">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
             </div>
 
             <div className="space-y-5 pt-4">
@@ -106,6 +118,7 @@ export function Configurator({ config, onChange }: ConfiguratorProps) {
                     </fieldset>
                 </div>
             </div>
-        </aside>
+            </aside>
+        </>
     )
 }
