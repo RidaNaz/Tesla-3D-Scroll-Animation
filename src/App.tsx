@@ -35,7 +35,7 @@ export default function App() {
 
       <div id="scroll-root" className="relative">
         {SECTIONS.map((section, i) => (
-          <section key={section.id} className="h-screen flex items-end p-12">
+          <section key={section.id} className="h-screen flex items-end p-6 sm:p-8 md:p-12">
             <AnimatePresence>
               {activeSection === i && (
                 <motion.div
@@ -44,10 +44,10 @@ export default function App() {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.4 }}
                 >
-                  <h2 className="text-4xl font-semibold text-black drop-shadow-lg">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-black drop-shadow-lg">
                     {section.title}
                   </h2>
-                  <p className="text-black/80 mt-2 max-w-md">{section.copy}</p>
+                  <p className="text-sm sm:text-base text-black/80 mt-2 max-w-xs sm:max-w-sm md:max-w-md">{section.copy}</p>
                 </motion.div>
               )}
             </AnimatePresence>
