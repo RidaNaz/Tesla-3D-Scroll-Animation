@@ -151,16 +151,41 @@ type GLTFResult = GLTF & {
   animations: THREE.AnimationClip[]
 }
 
-export function Roadster(props: React.JSX.IntrinsicElements['group']) {
+export type RoadsterConfig = {
+  paint: string
+  contrast: 'chrome' | 'blackout'
+  wheels: 'silver' | 'dark'
+  interior: 'black' | 'cream'
+}
+
+type RoadsterProps = React.JSX.IntrinsicElements['group'] & {
+  config?: RoadsterConfig
+}
+
+const DEFAULT_CONFIG: RoadsterConfig = {
+  paint: '#E31C23',
+  contrast: 'chrome',
+  wheels: 'silver',
+  interior: 'black',
+}
+
+export function Roadster({ config = DEFAULT_CONFIG, ...props }: RoadsterProps) {
   const { nodes, materials } = useGLTF('/scene.glb') as unknown as GLTFResult
-  
+
   useEffect(() => {
-    const carPaint = (materials as any).car_main_paint as THREE.MeshPhysicalMaterial
-    if (carPaint) {
-      carPaint.color.set('#E31C23') // Bright Tesla red
-    }
-  }, [materials])
-  
+    const carPaint = materials.car_main_paint
+    const chrome = materials.chrome
+    const rims = materials.Rims
+    const interior = materials.interior
+    const seats = materials.seats
+
+    carPaint.color.set(config.paint)
+    chrome.color.set(config.contrast === 'blackout' ? '#151515' : '#D8D8D8')
+    rims.color.set(config.wheels === 'dark' ? '#202225' : '#B7BBC0')
+    interior.color.set(config.interior === 'cream' ? '#C9B79C' : '#151515')
+    seats.color.set(config.interior === 'cream' ? '#E1D4BE' : '#242424')
+  }, [config, materials])
+
   return (
     <group {...props} dispose={null}>
       <group rotation={[-1.574, 0, 0]}>
