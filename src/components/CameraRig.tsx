@@ -4,7 +4,7 @@ import { scrollState } from '../lib/scrollState'
 
 const EXTERIOR_POS = new THREE.Vector3(-3.51, 3.03, 5.70)
 const PERFORMANCE_POS = new THREE.Vector3(2.14, 1.41, 3.30)
-const INTERIOR_POS = new THREE.Vector3(2.03, 1.66, -0.22)
+const INTERIOR_POS = new THREE.Vector3(4.74, 1.12, -0.04)
 
 // Rough look-at points — these weren't captured (only camera position was),
 // so tune these visually once you see it animate; adjust freely.
