@@ -22,6 +22,8 @@ export function CameraRig() {
   useEffect(() => {
     const updateCameraFov = () => {
       const fov = window.innerWidth < 768 ? 45 : 35
+
+      // eslint-disable-next-line react-hooks/immutability -- mutating the live THREE.Camera is intentional in R3F
       if (camera instanceof THREE.PerspectiveCamera && camera.fov !== fov) {
         camera.fov = fov
         camera.updateProjectionMatrix()
