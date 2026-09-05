@@ -177,10 +177,22 @@ export function Roadster({ config = DEFAULT_CONFIG, onLoaded, ...props }: Roadst
 
   useEffect(() => {
     onLoaded?.()
-    // Precompile every material's shader now, while idle, so the first
-    // scroll-triggered frames don't hit uncompiled shaders and stutter.
-    gl.compile(scene, camera)
-    invalidate() // render one warm frame so the compile actually executes
+
+    const runCompile = () => {
+      gl.compile(scene, camera)
+      invalidate()
+    }
+
+    const ric = window.requestIdleCallback
+    const cic = window.cancelIdleCallback
+
+    if (typeof ric === 'function') {
+      const id = ric(runCompile, { timeout: 2000 })
+      return () => cic?.(id)
+    } else {
+      const id = window.setTimeout(runCompile, 200)
+      return () => window.clearTimeout(id)
+    }
   }, [materials, onLoaded, gl, scene, camera, invalidate])
 
   useEffect(() => {
