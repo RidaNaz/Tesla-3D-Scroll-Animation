@@ -173,20 +173,12 @@ const DEFAULT_CONFIG: RoadsterConfig = {
 
 export function Roadster({ config = DEFAULT_CONFIG, onLoaded, ...props }: RoadsterProps) {
   const { nodes, materials } = useGLTF('/scene.glb') as unknown as GLTFResult
-  const { gl, scene, camera, invalidate } = useThree()
-
+  const { invalidate } = useThree()
+  
   useEffect(() => {
     onLoaded?.()
-
-    let cancelled = false
-    gl.compileAsync(scene, camera).then(() => {
-      if (!cancelled) invalidate()
-    })
-
-    return () => {
-      cancelled = true
-    }
-  }, [materials, onLoaded, gl, scene, camera, invalidate])
+    invalidate()
+  }, [materials, onLoaded, invalidate])
 
   useEffect(() => {
     const carPaint = materials.car_main_paint
