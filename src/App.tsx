@@ -89,25 +89,29 @@ export default function App() {
         )}
       </header>
 
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <Canvas
-          dpr={[1, 1.5]}
-          camera={{ fov: 35, position: [-3.51, 3.03, 5.7] }}
-          gl={{ alpha: true }}
-          onCreated={() => setIsLoading(false)}
-          frameloop="demand"
+      <div className="fixed inset-0 -z-20 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 78% 68% at 50% 50%, rgba(227, 28, 35, 0.42), transparent 72%), #050505',
+        }}
         >
-          <Suspense fallback={null}>
-            <Environment preset="studio" />
-          </Suspense>
-          <Suspense fallback={null}>
-            <Roadster config={config} onLoaded={() => setIsLoading(false)} />
-          </Suspense>
-          <CameraRig />
-        </Canvas>
+        <Canvas
+        dpr={[1, 1.5]}
+        camera={{ fov: 35, position: [-3.51, 3.03, 5.7] }}
+        gl={{ alpha: true }}
+        onCreated={() => setIsLoading(false)}
+        frameloop="demand"
+      >
+        <Suspense fallback={null}>
+          <Environment preset="studio" />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Roadster config={config} onLoaded={() => setIsLoading(false)} />
+        </Suspense>
+        <CameraRig />
+      </Canvas>
 
-        {isLoading && <Loader />}
-      </div>
+      {isLoading && <Loader />}
+    </div >
 
       <div id="scroll-root" className="relative z-10">
         {SECTIONS.map((section, i) => (
