@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useFrame, useThree, invalidate } from '@react-three/fiber'
 import * as THREE from 'three'
 import { scrollState } from '../lib/scrollState'
@@ -18,6 +18,7 @@ const tmpLook = new THREE.Vector3()
 
 export function CameraRig() {
   const { camera } = useThree()
+  const lastProgress = useRef(-1)
 
   useEffect(() => {
     const updateCameraFov = () => {
@@ -37,6 +38,15 @@ export function CameraRig() {
 
   useFrame(() => {
     const progress = scrollState.progress
+    const scrollMoved = Math.abs(progress - lastProgress.current) > 0.0001
+    const stillSettling = camera.position.distanceTo(tmpPos) > 0.001
+
+    if (!scrollMoved && !stillSettling) {
+      return // nothing to do — let the canvas go idle
+    }
+
+    lastProgress.current = progress
+
     let posA, posB, lookA, lookB, t
 
     if (progress <= 1 / 3) {
@@ -45,7 +55,7 @@ export function CameraRig() {
       lookA = EXTERIOR_LOOK; lookB = PERFORMANCE_LOOK
     } else if (progress <= 2 / 3) {
       t = (progress - 1 / 3) / (1 / 3)
-      posA = PERFORMANCE_POS; posB = PERFORMANCE_POS // hold steady during this section
+      posA = PERFORMANCE_POS; posB = PERFORMANCE_POS
       lookA = PERFORMANCE_LOOK; lookB = PERFORMANCE_LOOK
     } else {
       t = (progress - 2 / 3) / (1 / 3)
@@ -59,7 +69,7 @@ export function CameraRig() {
     camera.position.lerp(tmpPos, 0.15)
     camera.lookAt(tmpLook)
 
-    invalidate()
+    invalidate() // request the next frame — only while still moving
   })
 
   return null

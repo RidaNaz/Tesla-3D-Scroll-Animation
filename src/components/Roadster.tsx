@@ -8,6 +8,7 @@ Title: Tesla Roadster 2020 | www.vecarz.com
 */
 
 import * as THREE from 'three'
+import { useThree } from '@react-three/fiber'
 import React, { useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
 import type { GLTF } from 'three-stdlib'
@@ -172,10 +173,15 @@ const DEFAULT_CONFIG: RoadsterConfig = {
 
 export function Roadster({ config = DEFAULT_CONFIG, onLoaded, ...props }: RoadsterProps) {
   const { nodes, materials } = useGLTF('/scene.glb') as unknown as GLTFResult
+  const { gl, scene, camera, invalidate } = useThree()
 
   useEffect(() => {
     onLoaded?.()
-  }, [materials, onLoaded])
+    // Precompile every material's shader now, while idle, so the first
+    // scroll-triggered frames don't hit uncompiled shaders and stutter.
+    gl.compile(scene, camera)
+    invalidate() // render one warm frame so the compile actually executes
+  }, [materials, onLoaded, gl, scene, camera, invalidate])
 
   useEffect(() => {
     const carPaint = materials.car_main_paint

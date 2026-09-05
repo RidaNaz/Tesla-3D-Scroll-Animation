@@ -10,15 +10,15 @@ import { useLenis } from './hooks/useLenis'
 import { registerScrollTrigger } from './lib/scrollState'
 
 const SECTIONS = [
-  { 
-    id: 'exterior', 
-    title: 'Exterior', 
+  {
+    id: 'exterior',
+    title: 'Exterior',
     copy: 'Sculpted for speed. Every line tells a story of aerodynamic precision and uncompromising design.',
-    specs: null 
+    specs: null
   },
-  { 
-    id: 'performance', 
-    title: 'Performance', 
+  {
+    id: 'performance',
+    title: 'Performance',
     copy: 'Pushing boundaries. The Roadster redefines what\'s possible on four wheels.',
     specs: [
       { label: 'HP', value: '1000' },
@@ -26,11 +26,11 @@ const SECTIONS = [
       { label: 'Torque', value: '10100', unit: 'Nm' }
     ]
   },
-  { 
-    id: 'interior', 
-    title: 'Interior', 
+  {
+    id: 'interior',
+    title: 'Interior',
     copy: 'Crafted for the driver. Premium materials, intuitive controls, and a focus on what matters.',
-    specs: null 
+    specs: null
   },
 ]
 
@@ -88,10 +88,10 @@ export default function App() {
           </nav>
         )}
       </header>
-      
+
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <Canvas 
-          dpr={[1, 1.5]} 
+        <Canvas
+          dpr={[1, 1.5]}
           camera={{ fov: 35, position: [-3.51, 3.03, 5.7] }}
           gl={{ alpha: true }}
           onCreated={() => setIsLoading(false)}
@@ -105,6 +105,8 @@ export default function App() {
           </Suspense>
           <CameraRig />
         </Canvas>
+
+        {isLoading && <Loader />}
       </div>
 
       <div id="scroll-root" className="relative z-10">
@@ -120,12 +122,12 @@ export default function App() {
                 >
                   <div>
                     <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#f5f3ee] drop-shadow-lg">
-                    {section.title}
+                      {section.title}
                     </h2>
                     <p className="text-base sm:text-lg md:text-xl text-[#f5f3ee]/75 mt-4 max-w-xs sm:max-w-sm md:max-w-md leading-relaxed">
                       {section.copy}
                     </p>
-                    
+
                     {section.specs && (
                       <div className="mt-8 flex gap-6 sm:gap-8">
                         {section.specs.map((spec, idx) => (

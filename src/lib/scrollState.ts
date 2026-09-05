@@ -1,4 +1,5 @@
 import gsap from 'gsap'
+import { invalidate } from '@react-three/fiber'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -16,6 +17,7 @@ export function registerScrollTrigger(onSectionChange: (index: number) => void) 
     scrub: true,
     onUpdate: (self) => {
       scrollState.progress = self.progress
+      invalidate() // scroll changed — tell R3F a new frame is needed
       const section = Math.min(2, Math.floor(self.progress * 3))
       if (section !== activeSection) {
         activeSection = section
@@ -26,6 +28,7 @@ export function registerScrollTrigger(onSectionChange: (index: number) => void) 
 
   ScrollTrigger.refresh()
   scrollState.progress = trigger.progress
+  invalidate()
   const initialSection = Math.min(2, Math.floor(trigger.progress * 3))
   activeSection = initialSection
   onSectionChange(initialSection)
