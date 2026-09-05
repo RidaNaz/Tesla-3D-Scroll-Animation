@@ -178,20 +178,13 @@ export function Roadster({ config = DEFAULT_CONFIG, onLoaded, ...props }: Roadst
   useEffect(() => {
     onLoaded?.()
 
-    const runCompile = () => {
-      gl.compile(scene, camera)
-      invalidate()
-    }
+    let cancelled = false
+    gl.compileAsync(scene, camera).then(() => {
+      if (!cancelled) invalidate()
+    })
 
-    const ric = window.requestIdleCallback
-    const cic = window.cancelIdleCallback
-
-    if (typeof ric === 'function') {
-      const id = ric(runCompile, { timeout: 2000 })
-      return () => cic?.(id)
-    } else {
-      const id = window.setTimeout(runCompile, 200)
-      return () => window.clearTimeout(id)
+    return () => {
+      cancelled = true
     }
   }, [materials, onLoaded, gl, scene, camera, invalidate])
 
