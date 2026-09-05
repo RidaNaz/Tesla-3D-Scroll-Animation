@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame, useThree, invalidate } from '@react-three/fiber'
 import * as THREE from 'three'
 import { scrollState } from '../lib/scrollState'
 
@@ -58,6 +58,8 @@ export function CameraRig() {
 
     camera.position.lerp(tmpPos, 0.15)
     camera.lookAt(tmpLook)
+
+    invalidate()
   })
 
   return null

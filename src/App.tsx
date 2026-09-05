@@ -95,6 +95,7 @@ export default function App() {
           camera={{ fov: 35, position: [-3.51, 3.03, 5.7] }}
           gl={{ alpha: true }}
           onCreated={() => setIsLoading(false)}
+          frameloop="demand"
         >
           <Suspense fallback={null}>
             <Environment preset="studio" />
